@@ -14,9 +14,44 @@ function popupaddtask() {
   addtaskpopup.style.transition = 'all 0.3s';
 }
 
+function popupdisplay() {
+  let iddisplayid;
+  let iddisplayidout = this.id;
+  iddisplayid = iddisplayidout.charAt(0);
+  let displaytitle = document.getElementById('displaytitle');
+  let displaydesc = document.getElementById('descdisplay');
+  let displaysourcename = document.getElementById('sourcename');
+  let absscreen = document.getElementById('displaycontainer');
+  let addtaskpopup = document.getElementById('displaypop');
+  absscreen.style.zIndex = '2';
+  addtaskpopup.style.scale = '1';
+  addtaskpopup.style.transform = ' translateY(0px)';
+  addtaskpopup.style.transition = 'all 0.3s';
+  displaytitle.innerText = document.getElementById(
+    iddisplayid + 'title'
+  ).innerText;
+  displaydesc.innerText = document.getElementById(
+    iddisplayid + 'desc'
+  ).innerText;
+  displaysourcename.innerText = document.getElementById(
+    iddisplayid + 'ownername'
+  ).innerText;
+}
+
 function closepopup() {
   let absscreen = document.getElementById('popcontainer');
   let addtaskpopup = document.getElementById('addtaskpopup');
+  addtaskpopup.style.scale = '0';
+  addtaskpopup.style.transition = 'all 0.3s';
+  addtaskpopup.style.transform = ' translateY(500px)';
+  setTimeout(() => {
+    absscreen.style.zIndex = '-1';
+  }, 300);
+}
+
+function closepopupdisplay() {
+  let absscreen = document.getElementById('displaycontainer');
+  let addtaskpopup = document.getElementById('displaypop');
   addtaskpopup.style.scale = '0';
   addtaskpopup.style.transition = 'all 0.3s';
   addtaskpopup.style.transform = ' translateY(500px)';
@@ -31,6 +66,13 @@ let secbuttoncount = 0;
 let impbutton = document.getElementById('important');
 let pributton = document.getElementById('primary');
 let secbutton = document.getElementById('secondary');
+let source = 'primary.png';
+let ownername;
+let owneremail;
+let titletask;
+let sourcelinktask;
+let desctask;
+let tagstask;
 
 function imptagcolor() {
   if (impbuttoncount % 2 == 0) {
@@ -68,15 +110,6 @@ function sectagcolor() {
   }
 }
 
-let source = 'primary.png';
-
-let ownername;
-let owneremail;
-let titletask;
-let sourcelinktask;
-let desctask;
-let tagstask;
-
 function togetvalues() {
   ownername = document.getElementById('ownername').value;
   owneremail = document.getElementById('owneremail').value;
@@ -85,6 +118,8 @@ function togetvalues() {
   desctask = document.getElementById('descpop').value;
   tagstask = 'IMP';
 }
+
+let sideid = 0;
 
 function createelementside() {
   if (
@@ -104,7 +139,9 @@ function createelementside() {
   ) {
     let maincontainer = document.getElementById('insidescroll');
     let noteside = document.createElement('div');
+    noteside.onclick = popupdisplay;
     noteside.className = 'note1';
+    noteside.setAttribute('id', sideid);
     let sidetagimagediv = document.createElement('div');
     sidetagimagediv.className = 'tagiconside';
     let sidecardimage = document.createElement('img');
@@ -115,13 +152,18 @@ function createelementside() {
     let titlesidecard = document.createElement('div');
     titlesidecard.className = 'titlesidecard';
     titlesidecard.innerText = titletask;
+    titlesidecard.setAttribute('id', sideid + 'sidetitle');
     sidetagimagediv.appendChild(sidecardimage);
     noteside.appendChild(sidetagimagediv);
     noteside.appendChild(titlesidecard);
 
     maincontainer.appendChild(noteside);
+    console.log(titlesidecard.id);
+    sideid++;
   }
 }
+
+let mainid = 0;
 
 function createelementmain() {
   if (
@@ -142,6 +184,7 @@ function createelementmain() {
     let maincontainer = document.getElementById('mainnotessection');
     let notecontainer = document.createElement('div');
     notecontainer.className = 'note1main';
+    notecontainer.setAttribute('id', mainid);
 
     let firstsection = document.createElement('div');
     firstsection.className = 'firstsectionmain';
@@ -155,6 +198,7 @@ function createelementmain() {
     let titlemaincard = document.createElement('div');
     titlemaincard.className = 'titlemaincard';
     titlemaincard.innerText = titletask;
+    titlemaincard.setAttribute('id', mainid + 'title');
 
     let tagmainsection = document.createElement('div');
     tagmainsection.className = 'tagmainsection';
@@ -173,6 +217,7 @@ function createelementmain() {
 
     secondsection.innerText = desctask;
     secondsection.className = 'secondsection';
+    secondsection.setAttribute('id', mainid + 'desc');
 
     //thirdsection dynamic generation
 
@@ -186,6 +231,7 @@ function createelementmain() {
     let sourcename = document.createElement('div');
     sourcename.className = 'sourcename';
     sourcename.innerText = ownername;
+    sourcename.setAttribute('id', mainid + 'ownername');
 
     sourcemaincard.appendChild(sourcehead);
     sourcemaincard.appendChild(sourcename);
@@ -202,8 +248,10 @@ function createelementmain() {
     deleteimg.className = 'cardbuttonimages';
 
     let editimg = document.createElement('img');
+    editimg.setAttribute('id', mainid + 'expand');
     editimg.src = 'edit.png';
     editimg.className = 'cardbuttonimages';
+    editimg.onclick = popupdisplay;
 
     let completedimg = document.createElement('img');
     completedimg.src = 'completed.png';
@@ -221,17 +269,11 @@ function createelementmain() {
     notecontainer.appendChild(secondsection);
     notecontainer.appendChild(thirdsection);
     maincontainer.appendChild(notecontainer);
-  }
-}
-
-let completetaskcount = 0;
-function completedtask() {
-  if (completetaskcount % 2 == 0) {
-    document.getElementById('titlemain').style.textDecoration = 'line-through';
-    completetaskcount++;
-  } else {
-    document.getElementById('titlemain').style.textDecoration = 'none';
-    completetaskcount++;
+    console.log(notecontainer.id);
+    console.log(titlemaincard.id);
+    console.log(secondsection.id);
+    console.log(sourcename.id);
+    mainid++;
   }
 }
 
