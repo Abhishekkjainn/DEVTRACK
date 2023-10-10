@@ -151,6 +151,7 @@ function createelementmain() {
     thirdsection.className = 'thirdsection';
 
     //firstsection dynamic generation
+
     let titlemaincard = document.createElement('div');
     titlemaincard.className = 'titlemaincard';
     titlemaincard.innerText = titletask;
@@ -220,6 +221,17 @@ function createelementmain() {
     notecontainer.appendChild(secondsection);
     notecontainer.appendChild(thirdsection);
     maincontainer.appendChild(notecontainer);
+  }
+}
+
+let completetaskcount = 0;
+function completedtask() {
+  if (completetaskcount % 2 == 0) {
+    document.getElementById('titlemain').style.textDecoration = 'line-through';
+    completetaskcount++;
+  } else {
+    document.getElementById('titlemain').style.textDecoration = 'none';
+    completetaskcount++;
   }
 }
 
