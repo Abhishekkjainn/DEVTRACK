@@ -11,6 +11,7 @@
     />
   </head>
   <body>
+    <!--Main Container-->
     <div class="maincontainer">
       <div class="sidebar">
         <!--Side Top bar for close minimise and maximise-->
@@ -26,7 +27,20 @@
             <span class="imagetextintro">Dev Track</span>
           </div>
         </div>
-        <div class="scrollingsidebar"></div>
+        <div class="scrollingsidebar" id="scrollingsidebar">
+          <div class="insidescroll" id="insidescroll">
+            <!-- <div class="note1">
+              <div class="tagiconside">
+                <img
+                  src="important2.png"
+                  alt="Important"
+                  class="tagimageside"
+                />
+              </div>
+              <div class="titlesidecard">This is First Note</div>
+            </div> -->
+          </div>
+        </div>
         <div class="clearbuttonsdivside">
           <div class="profilename">
             <img src="user.png" alt="" width="30px" />
@@ -42,12 +56,52 @@
             <button
               type="button"
               class="button addbutton"
-              onclick="popupaddtask()"
+              onclick="popupaddtask(),clearvalues()"
             >
               Add Note
             </button>
             <button type="button" class="button clearbutton">Clear All</button>
           </div>
+        </div>
+
+        <!--main tasks section-->
+        <div class="mainnotessection" id="mainnotessection">
+          <!-- <div class="note1main">
+            <div class="firstsectionmain">
+              <div class="titlemaincard">This is Second Card</div>
+              <div class="tagmainsection">
+                <div
+                  class="important tagsmark"
+                  id="important"
+                  onclick="imptagcolor()"
+                >
+                  IMP
+                </div>
+              </div>
+            </div>
+            <div class="secondsection">
+              Lorem, ipsum dolor sit amet consectetur adipisicing
+              elitRepudiandae nisi facere ratione! Ad, quae
+              veritatis?Repellendus nam alias ipsum reiciendis qui
+              deserunreprehenderit velit excepturi deleniti. Sit totam ipsa
+              dolor
+            </div>
+            <div class="thirdsection">
+              <div class="sourcemaincard">
+                <div class="sourcehead">Source</div>
+                <div class="sourcename">Abhishek Jain</div>
+              </div>
+              <div class="buttonssectionmain">
+                <img src="link.png" alt="" class="cardbuttonimages" />
+
+                <img src="delete.png" alt="" class="cardbuttonimages" />
+
+                <img src="edit.png" alt="" class="cardbuttonimages" />
+
+                <img src="completed.png" alt="" class="cardbuttonimages" />
+              </div>
+            </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -55,11 +109,107 @@
     <!--Pop Up for Add Post-->
     <div class="popupcontainer" id="popcontainer">
       <div class="popupaddtask" id="addtaskpopup">
-        <div class="popuptobar" onclick="closepopup()">
+        <div class="popuptobar">
           <div class="buttonpopsection">
             <div class="close" onclick="closepopup()"></div>
             <div class="minimise"></div>
             <div class="maximise"></div>
+          </div>
+          <button
+            type="button"
+            class="createbuttonpop"
+            onclick=" togetvalues(),createelementmain(), createelementside(), closepopup()"
+          >
+            +
+          </button>
+        </div>
+        <!--Mainsection of popup-->
+        <div class="headingpop">Add A New Task</div>
+        <div class="inputformpop">
+          <div class="ownernameemail">
+            <div class="input-group">
+              <input
+                required=""
+                type="text"
+                name="text"
+                autocomplete="off"
+                class="input"
+                id="ownername"
+              />
+              <label class="user-label">Owner Name</label>
+            </div>
+            <div class="input-group">
+              <input
+                required=""
+                type="text"
+                name="text"
+                autocomplete="off"
+                class="input"
+                id="owneremail"
+              />
+              <label class="user-label">Owner Email</label>
+            </div>
+          </div>
+
+          <div class="titleandsource">
+            <div class="input-group">
+              <input
+                required=""
+                type="text"
+                name="text"
+                autocomplete="off"
+                class="input"
+                id="titletask"
+              />
+              <label class="user-label">Title</label>
+            </div>
+            <div class="input-group">
+              <input
+                required=""
+                type="text"
+                name="text"
+                autocomplete="off"
+                class="input"
+                id="sourcelink"
+              />
+              <label class="user-label">Source Link</label>
+            </div>
+          </div>
+
+          <div class="description">
+            <textarea
+              name="desc"
+              id="descpop"
+              class="descpop"
+              placeholder="Enter Detailed Description or Source Code"
+            ></textarea>
+          </div>
+
+          <div class="tags">
+            <span class="taghead">Tags</span>
+            <div class="tagsselect">
+              <div
+                class="important tagsmark"
+                id="important"
+                onclick="imptagcolor()"
+              >
+                IMP
+              </div>
+              <div
+                class="primary tagsmark"
+                id="primary"
+                onclick="pritagcolor()"
+              >
+                PRI
+              </div>
+              <div
+                class="secondary tagsmark"
+                id="secondary"
+                onclick="sectagcolor()"
+              >
+                SEC
+              </div>
+            </div>
           </div>
         </div>
       </div>
