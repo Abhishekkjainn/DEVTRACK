@@ -60,7 +60,13 @@
             >
               Add Note
             </button>
-            <button type="button" class="button clearbutton">Clear All</button>
+            <button
+              type="button"
+              class="button clearbutton"
+              onclick="clearall()"
+            >
+              Clear All
+            </button>
           </div>
         </div>
 
@@ -123,7 +129,7 @@
             <div class="maximise"></div>
           </div>
           <button
-            type="button"
+            type="submit"
             class="createbuttonpop"
             onclick=" togetvalues(),createelementmain(), createelementside(), closepopup()"
           >
@@ -232,14 +238,17 @@
             <div class="maximise"></div>
           </div>
         </div>
+        <div class="titlefull" style="scale: 0" id="fulltitle"></div>
         <div class="mainbardisplaymessage">
           <div class="titlebardisplaymessage">
-            <div class="titledisplay" id="displaytitle">This is First Note</div>
+            <div class="titledisplay" id="displaytitle"></div>
             <div class="tagdisplay tagsmark important">IMP</div>
           </div>
           <div class="descriptiondisplay" id="descdisplay"></div>
           <div class="sourcedisplay">
-            - <span id="sourcename">Abhishek Jain</span>
+            <span id="sourcename"></span>
+
+            <span id="sourceemail" class="sourceemail"></span>
           </div>
         </div>
       </div>

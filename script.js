@@ -1,3 +1,21 @@
+let impbuttoncount = 0;
+let pributtoncount = 0;
+let secbuttoncount = 0;
+let impbutton = document.getElementById('important');
+let pributton = document.getElementById('primary');
+let secbutton = document.getElementById('secondary');
+let source = 'primary.png';
+let ownername;
+let owneremail;
+let titletask;
+let titlestring;
+let descstring;
+let sourcelinktask;
+let desctask = ``;
+let tagstask;
+let sideid = 0;
+let mainid = 0;
+
 function closewindow() {
   let closewindow = confirm('Sure You Want to Close the Window?');
   if (closewindow == true) {
@@ -23,18 +41,24 @@ function popupdisplay() {
   let displaysourcename = document.getElementById('sourcename');
   let absscreen = document.getElementById('displaycontainer');
   let addtaskpopup = document.getElementById('displaypop');
+  let displayemail = document.getElementById('sourceemail');
+
   absscreen.style.zIndex = '2';
   addtaskpopup.style.scale = '1';
   addtaskpopup.style.transform = ' translateY(0px)';
   addtaskpopup.style.transition = 'all 0.3s';
   displaytitle.innerText = document.getElementById(
-    iddisplayid + 'title'
+    iddisplayid + 'fulltitle'
   ).innerText;
+  console.log('this is pop ' + iddisplayid);
   displaydesc.innerText = document.getElementById(
-    iddisplayid + 'desc'
-  ).innerText;
+    iddisplayid + 'fulldesc'
+  ).textContent;
   displaysourcename.innerText = document.getElementById(
     iddisplayid + 'ownername'
+  ).innerText;
+  displayemail.innerText = document.getElementById(
+    iddisplayid + 'owneremail'
   ).innerText;
 }
 
@@ -59,20 +83,6 @@ function closepopupdisplay() {
     absscreen.style.zIndex = '-1';
   }, 300);
 }
-
-let impbuttoncount = 0;
-let pributtoncount = 0;
-let secbuttoncount = 0;
-let impbutton = document.getElementById('important');
-let pributton = document.getElementById('primary');
-let secbutton = document.getElementById('secondary');
-let source = 'primary.png';
-let ownername;
-let owneremail;
-let titletask;
-let sourcelinktask;
-let desctask;
-let tagstask;
 
 function imptagcolor() {
   if (impbuttoncount % 2 == 0) {
@@ -119,8 +129,6 @@ function togetvalues() {
   tagstask = 'IMP';
 }
 
-let sideid = 0;
-
 function createelementside() {
   if (
     ownername == '' ||
@@ -141,7 +149,7 @@ function createelementside() {
     let noteside = document.createElement('div');
     noteside.onclick = popupdisplay;
     noteside.className = 'note1';
-    noteside.setAttribute('id', sideid);
+    noteside.setAttribute('id', sideid + 's');
     let sidetagimagediv = document.createElement('div');
     sidetagimagediv.className = 'tagiconside';
     let sidecardimage = document.createElement('img');
@@ -151,7 +159,7 @@ function createelementside() {
     // sidecardimage.width = '20px';
     let titlesidecard = document.createElement('div');
     titlesidecard.className = 'titlesidecard';
-    titlesidecard.innerText = titletask;
+    titlesidecard.innerText = titletask.substring(0, 20) + '..';
     titlesidecard.setAttribute('id', sideid + 'sidetitle');
     sidetagimagediv.appendChild(sidecardimage);
     noteside.appendChild(sidetagimagediv);
@@ -162,8 +170,6 @@ function createelementside() {
     sideid++;
   }
 }
-
-let mainid = 0;
 
 function createelementmain() {
   if (
@@ -194,11 +200,21 @@ function createelementmain() {
     thirdsection.className = 'thirdsection';
 
     //firstsection dynamic generation
-
     let titlemaincard = document.createElement('div');
+    titlemaincard.innerText = titletask.substring(0, 20) + '..';
     titlemaincard.className = 'titlemaincard';
-    titlemaincard.innerText = titletask;
     titlemaincard.setAttribute('id', mainid + 'title');
+    titlestring = titletask;
+
+    let fulltitle = document.createElement('div');
+    fulltitle.innerText = titletask;
+    fulltitle.style.display = 'none';
+    fulltitle.setAttribute('id', mainid + 'fulltitle');
+
+    let fulldesc = document.createElement('div');
+    fulldesc.textContent = desctask;
+    fulldesc.style.display = 'none';
+    fulldesc.setAttribute('id', mainid + 'fulldesc');
 
     let tagmainsection = document.createElement('div');
     tagmainsection.className = 'tagmainsection';
@@ -212,12 +228,14 @@ function createelementmain() {
     tagmainsection.appendChild(tag);
     firstsection.appendChild(titlemaincard);
     firstsection.appendChild(tagmainsection);
+    firstsection.appendChild(fulltitle);
 
     //secondsection dynamic generation
 
-    secondsection.innerText = desctask;
+    secondsection.innerText = desctask.substring(0, 150) + '..';
     secondsection.className = 'secondsection';
     secondsection.setAttribute('id', mainid + 'desc');
+    secondsection.appendChild(fulldesc);
 
     //thirdsection dynamic generation
 
@@ -233,8 +251,15 @@ function createelementmain() {
     sourcename.innerText = ownername;
     sourcename.setAttribute('id', mainid + 'ownername');
 
+    let sourceemail = document.createElement('div');
+    sourceemail.className = 'sourceemail';
+    sourceemail.style.display = 'none';
+    sourceemail.innerText = owneremail;
+    sourceemail.setAttribute('id', mainid + 'owneremail');
+
     sourcemaincard.appendChild(sourcehead);
     sourcemaincard.appendChild(sourcename);
+    sourcemaincard.appendChild(sourceemail);
 
     let buttonsectionmain = document.createElement('div');
     buttonsectionmain.className = 'buttonssectionmain';
@@ -246,6 +271,7 @@ function createelementmain() {
     let deleteimg = document.createElement('img');
     deleteimg.src = 'delete.png';
     deleteimg.className = 'cardbuttonimages';
+    deleteimg.onclick = deleteelements;
 
     let editimg = document.createElement('img');
     editimg.setAttribute('id', mainid + 'expand');
@@ -256,6 +282,8 @@ function createelementmain() {
     let completedimg = document.createElement('img');
     completedimg.src = 'completed.png';
     completedimg.className = 'cardbuttonimages';
+    completedimg.onclick = tomarkascomplete;
+    completedimg.setAttribute('id', mainid + 'compbutton');
 
     buttonsectionmain.appendChild(linkimg);
     buttonsectionmain.appendChild(deleteimg);
@@ -284,4 +312,59 @@ function clearvalues() {
   sourcelinktask = document.getElementById('sourcelink').value = '';
   desctask = document.getElementById('descpop').value = '';
   tagstask = 'IMP';
+}
+
+function senddatatosheets() {
+  popupdisplay();
+}
+
+function deleteelements() {
+  let parent1id = this.parentNode;
+  let parentt2id = parent1id.parentNode;
+  let parentid = parentt2id.parentNode.id;
+  console.log(parentid);
+  let sideid = parentid + 's';
+
+  let maincontainer = document.getElementById('mainnotessection');
+
+  let removedel = document.getElementById(parentid);
+  let sidedel = document.getElementById(sideid);
+  if (removedel) {
+    let useragreementtodeletenotes = confirm(
+      'Do you Really Want to Delete the Note ?? '
+    );
+    if (useragreementtodeletenotes) {
+      removedel.remove();
+      sidedel.remove();
+    } else {
+      return false;
+    }
+  }
+}
+
+function tomarkascomplete() {
+  let parent1id = this.parentNode;
+  let parentt2id = parent1id.parentNode;
+  let parentid = parentt2id.parentNode.id;
+  console.log(parentid);
+  // let compbutton = document.getElementById(parentid + 'compbutton');
+  let comptitle = document.getElementById(parentid + 'title');
+  // comptitle.classList.toggle('.completedtaskstyle');
+
+  // Toggle the "myStyle" class on the element
+  comptitle.classList.toggle('completedtaskstyle');
+}
+
+function clearall() {
+  let maincontainer = document.getElementById('mainnotessection');
+  let maincontainerside = document.getElementById('insidescroll');
+  let useragreementtoclearallnotes = confirm(
+    'You Sure To Clear All The Notes?'
+  );
+  if (useragreementtoclearallnotes) {
+    maincontainer.innerHTML = '';
+    maincontainerside.innerHTML = '';
+  } else {
+    return false;
+  }
 }

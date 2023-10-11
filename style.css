@@ -107,6 +107,8 @@ body{
     font-size: 0.8rem;
     color: grey;
     text-align: left;
+    /* word-wrap: break-word;
+    word-break: break-all; */
 }
 .tagmainsection{
     display: flex;
@@ -541,13 +543,23 @@ body{
     margin-top: 10px;
 }
 .titledisplay{
+    width: 85%;
+    height: 100%;
     font-size: 2rem;
     font-family: 'Poppins';
     font-weight: 600;
     color: rgb(219, 219, 219);
     transform: translateY(10px);
+    white-space: nowrap;
+    overflow-x: scroll;
+    cursor: move;
 }
 .descriptiondisplay{
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+    flex-wrap: wrap;
+    flex-direction: column;
     height: 67%;
     width: 85%;
     padding-left: 2.5%;
@@ -565,9 +577,17 @@ body{
     height: 5%;
     margin-top: 20px;
     display: flex;
-    justify-content: end;
-    align-items: center;
+    justify-content: center;
+    align-items: end;
+    flex-direction: column;
     color: white;
     font-weight: 600;
-
+}
+.sourceemail{
+    font-size:0.7rem ;
+    color: #66666d;
+    font-weight: 500;
+}
+.completedtaskstyle{
+    text-decoration: line-through;
 }
